@@ -1,16 +1,8 @@
-name: workflow
-on:
-    workflow_dispatch:
+import sys
+import hashlib
 
-jobs:
-
-    pytest:
-        runs-on: ubuntu-22.04
-        steps:
-            - name: checkout code
-            uses: actions/checkout@v3
-            - name: check default env
-            run: env
-            - name: print env
-            run: echo $GITHUB_REPOSITORY
-            # 這裡使用
+file_name = sys.argv[1]
+with open(file_name, "rb") as f:
+    bytes = f.read()  # read entire file as bytes
+    readable_hash = hashlib.sha256(bytes).hexdigest().upper()
+    print(f"sha256: {readable_hash}")
